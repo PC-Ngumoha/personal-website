@@ -476,6 +476,7 @@ export interface Setting {
   id: string;
   siteName?: string | null;
   tagline?: string | null;
+  image?: (string | null) | Media;
   socials?: {
     linkedin?: string | null;
     github?: string | null;
@@ -522,6 +523,7 @@ export interface Setting {
 export interface SettingsSelect<T extends boolean = true> {
   siteName?: T;
   tagline?: T;
+  image?: T;
   socials?:
     | T
     | {

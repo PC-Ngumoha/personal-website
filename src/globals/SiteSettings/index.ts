@@ -12,6 +12,11 @@ export const SiteSettings: GlobalConfig = {
       type: 'text',
     },
     {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
       name: 'socials',
       type: 'group',
       fields: [
