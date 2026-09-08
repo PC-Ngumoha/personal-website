@@ -187,13 +187,17 @@ export interface Theme {
  */
 export interface Post {
   id: string;
-  title: string;
-  subtitle?: string | null;
-  slug?: string | null;
+  coverImage?: (string | null) | Media;
   published_at?: string | null;
   status?: ('draft' | 'published') | null;
   theme: string | Theme;
-  coverImage?: (string | null) | Media;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   body?: {
     root: {
       type: string;
@@ -391,13 +395,14 @@ export interface ThemesSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
-  title?: T;
-  subtitle?: T;
-  slug?: T;
+  coverImage?: T;
   published_at?: T;
   status?: T;
   theme?: T;
-  coverImage?: T;
+  title?: T;
+  subtitle?: T;
+  generateSlug?: T;
+  slug?: T;
   body?: T;
   updatedAt?: T;
   createdAt?: T;
