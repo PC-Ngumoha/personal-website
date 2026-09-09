@@ -2,6 +2,7 @@
 import { Button, useForm, useFormFields, toast } from '@payloadcms/ui'
 import { useState } from 'react'
 
+// TODO: fix the transition between "Unpublish" & "Publish" button modes
 export default function PublishButtonComponent() {
   const { submit, getData } = useForm()
   const dispatchFields = useFormFields(([, dispatch]) => dispatch)

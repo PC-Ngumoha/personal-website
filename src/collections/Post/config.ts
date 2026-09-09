@@ -1,5 +1,6 @@
-import { FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import { FixedToolbarFeature, lexicalEditor, BlocksFeature } from '@payloadcms/richtext-lexical'
 import { CollectionConfig, slugField } from 'payload'
+import { CodeBlock } from '@/blocks/Code/config'
 
 export const Post: CollectionConfig = {
   slug: 'posts',
@@ -69,9 +70,13 @@ export const Post: CollectionConfig = {
     slugField({ position: 'main' }), // Auto-generated slug from 'title' field
     {
       name: 'body',
-      type: 'richText',
+      type: 'richText' as const,
       editor: lexicalEditor({
-        features: ({ defaultFeatures }) => [...defaultFeatures, FixedToolbarFeature()],
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          FixedToolbarFeature(),
+          BlocksFeature({ blocks: [CodeBlock] }),
+        ],
       }),
     },
   ],
