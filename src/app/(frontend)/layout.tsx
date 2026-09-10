@@ -26,7 +26,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${lora.variable}`}>
       <body className="bg-off-white text-gray-500 p-2">
-        <header className="flex flex-col border-b border-green-900">
+        <header className="flex flex-col border-b border-green-900/30">
           <Navbar settings={siteSettings} />
         </header>
         <main className="max-w-350 mx-auto">{children}</main>

@@ -33,11 +33,11 @@ export function Navbar(props: { settings: Setting }) {
                 />
               </div>
             )}
-          <span className="font-bold text-near-dark tracking-tighter [word-spacing:4px] text-xl">
+          <span className="font-bold text-near-dark tracking-tighter [word-spacing:4px] text-xl lg:text-2xl">
             {props.settings.navbar?.logo}'s Portfolio
           </span>
         </div>
-        <ul className="hidden md:flex items-center gap-10 font-semibold">
+        <ul className="hidden md:flex items-center gap-10 font-light">
           {props.settings.navbar?.navLinks?.map((link) => {
             // Detecting the page we're currently on.
             const currentPage = pathname === link?.uri
