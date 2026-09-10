@@ -4,6 +4,7 @@ import config from '@/payload.config'
 import { getPayload } from 'payload'
 import { Navbar } from '@/components/ui/Navbar'
 import { Lora } from 'next/font/google'
+import { Footer } from '@/components/ui/Footer'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -30,6 +31,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <Navbar settings={siteSettings} />
         </header>
         <main className="max-w-350 mx-auto">{children}</main>
+        <div className="border-t border-green-900/30">
+          <Footer settings={siteSettings} />
+        </div>
       </body>
     </html>
   )
