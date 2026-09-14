@@ -90,19 +90,19 @@ async function PostsArchive({ payload }: { payload: Awaited<ReturnType<typeof ge
                   <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.12em] text-gray-500">
                     {post.theme && typeof post.theme !== 'string' && `#${post.theme.name}`}
                   </p>
-                  <h2 className="font-serif text-xl leading-tight tracking-[-0.02em] text-near-dark sm:text-[22px]">
+                  <h2 className="font-serif text-xl md:text-2xl leading-tight tracking-[-0.02em] text-near-dark">
                     <Link href={`/posts/${post.slug}`} className="hover:opacity-70">
                       {post.title}
                     </Link>
                   </h2>
                   {post.subtitle ? (
-                    <p className="mt-4 max-w-135 font-serif text-[13px] leading-[1.45] text-gray-500">
+                    <p className="mt-4 max-w-135 font-serif text-sm leading-[1.45] text-gray-500">
                       {post.subtitle.substring(0, 100)}
                     </p>
                   ) : null}
                   <Link
                     href={`/posts/${post.slug}`}
-                    className="mt-5 inline-block font-mono text-[8px] uppercase tracking-[0.16em] text-gray-600 hover:text-near-dark"
+                    className="mt-5 inline-block font-mono text-[9px] uppercase tracking-[0.16em] text-gray-600 hover:text-near-dark"
                   >
                     Read entry →
                   </Link>
@@ -121,7 +121,7 @@ async function PostsArchive({ payload }: { payload: Awaited<ReturnType<typeof ge
           })}
         </div>
 
-        <button className="mx-auto mt-10 block border border-gray-200 px-9 py-3 font-mono text-[8px] uppercase tracking-[0.12em] text-near-dark hover:border-gray-400">
+        <button className="mx-auto mt-10 block border border-gray-200 px-9 py-3 font-mono text-xs uppercase tracking-[0.12em] text-near-dark hover:border-gray-400">
           Load older entries&nbsp; →
         </button>
       </div>
