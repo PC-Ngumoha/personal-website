@@ -33,6 +33,11 @@ export const CodeBlock: Block = {
           type: 'select',
           defaultValue: 'typescript',
           options: PROGRAMMING_LANGUAGES,
+          // admin: {
+          //   components: {
+          //     Field: ''
+          //   }
+          // }
         },
       ],
     },
