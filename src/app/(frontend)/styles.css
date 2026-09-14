@@ -3,6 +3,7 @@
 @theme {
   --color-off-white: #faf9f6;
   --color-near-dark: #1a1a1a;
+  --font-mono: var(--font-jetbrain-mono);
 }
 
 body {

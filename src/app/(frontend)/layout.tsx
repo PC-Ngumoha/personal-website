@@ -3,7 +3,7 @@ import './styles.css'
 import config from '@/payload.config'
 import { getPayload } from 'payload'
 import { Navbar } from '@/components/ui/Navbar'
-import { Lora } from 'next/font/google'
+import { Lora, JetBrains_Mono } from 'next/font/google'
 import { Footer } from '@/components/ui/Footer'
 
 export const metadata = {
@@ -17,6 +17,11 @@ const lora = Lora({
   variable: '--font-lora',
 })
 
+const jetbrains_mono = JetBrains_Mono({
+  variable: '--font-jetbrain-mono',
+  subsets: ['latin'],
+})
+
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
   const payload = await getPayload({ config })
@@ -25,7 +30,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   // console.log(siteSettings)
 
   return (
-    <html lang="en" className={`${lora.variable}`}>
+    <html lang="en" className={`${lora.variable} ${jetbrains_mono.variable}`}>
       <body className="bg-off-white text-gray-500 p-2">
         <header className="flex flex-col border-b border-green-900/30">
           <Navbar settings={siteSettings} />

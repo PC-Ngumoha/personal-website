@@ -60,7 +60,7 @@ export default async function HomePage() {
             href="/posts"
             className="text-[0.62rem] font-medium uppercase tracking-[0.16em] text-near-dark/65 transition-opacity hover:opacity-60"
           >
-            View all articles <span className="ml-1">→</span>
+            View all articles <span className="ml-1 md:hover:ml-5 text-lg">→</span>
           </Link>
         </div>
 
