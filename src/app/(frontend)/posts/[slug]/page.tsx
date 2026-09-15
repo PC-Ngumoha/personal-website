@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { getPayload } from 'payload'
-import { IoChevronBackOutline } from 'react-icons/io5'
+import { IoBookmarkOutline, IoChevronBackOutline, IoShareOutline } from 'react-icons/io5'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
@@ -9,6 +9,7 @@ import { RichText } from '@/components/RichText'
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug: postSlug } = await params
   const payload = await getPayload({ config })
+  const siteSettings = await payload.findGlobal({ slug: 'settings', depth: 2 })
   const foundPosts = await payload.find({
     collection: 'posts',
     where: {
@@ -22,6 +23,15 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   if (!post) {
     notFound() // Raise 404
   }
+
+  const relatedPosts = await payload.find({
+    collection: 'posts',
+    where: {
+      id: { not_equals: post.id },
+    },
+    sort: '-published_at',
+    limit: 2,
+  })
 
   const dateString = new Intl.DateTimeFormat('en-GB', {
     dateStyle: 'full',
@@ -127,9 +137,71 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             <RichText data={post.body} />
           </div>
         </section>
-        <footer className="mt-16 flex justify-between border-t border-[#dedbd3] pt-6 text-sm uppercase tracking-[.2em] text-[#77736b]">
-          <span>Continue reading</span>
-          <span>All articles</span>
+        <section
+          className="mx-auto mt-16 flex max-w-[670px] items-center justify-between border-y border-[#dedbd3] py-4
+        font-mono text-[11px] uppercase tracking-[.14em] text-[#77736b]"
+        >
+          <div className="flex items-center gap-3">
+            <div
+              className="flex h-8 w-8 items-center justify-center rounded-full overflow-hidden bg-[#e8e5de]
+            text-[10px] text-[#292825]"
+            >
+              {siteSettings.image && typeof siteSettings.image !== 'string' && (
+                <Image
+                  src={siteSettings.image.url as string}
+                  alt={siteSettings.image.alt}
+                  width={300}
+                  height={300}
+                  className="w-full h-full object-center"
+                />
+              )}
+            </div>
+            <div>
+              <p className="text-[12px] text-[#292825]">{siteSettings.siteName}</p>
+              <p className="mt-1 text-[9px] tracking-[.12em]">{siteSettings.tagline}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-5">
+            <button type="button" className="flex items-center gap-1.5 hover:text-[#292825]">
+              <IoShareOutline className="h-3 w-3" />
+              Share
+            </button>
+            <button type="button" className="flex items-center gap-1.5 hover:text-[#292825]">
+              <IoBookmarkOutline className="h-3 w-3" />
+              Save
+            </button>
+          </div>
+        </section>
+        <footer className="mt-16 border-t border-[#dedbd3] pt-6 text-[#77736b]">
+          <div className="mb-10 flex items-center justify-between text-[10px] uppercase tracking-[.2em]">
+            <span>Continue reading</span>
+            <Link href="/posts" className="border-b border-[#aaa69e] pb-1">
+              All articles
+            </Link>
+          </div>
+          <div className="grid gap-10 sm:grid-cols-2">
+            {relatedPosts.docs.map((relatedPost) => (
+              <Link
+                key={relatedPost.id}
+                href={`/posts/${relatedPost.slug}`}
+                className="group border-b border-[#dedbd3] pb-4"
+              >
+                <span className="block text-[8px] uppercase tracking-[.2em]">
+                  {new Intl.DateTimeFormat('en-GB', {
+                    month: 'short',
+                    day: '2-digit',
+                  }).format(new Date(relatedPost.published_at as string))}
+                </span>
+                <h2 className="mt-4 text-xl tracking-[-.02em] text-[#292825] group-hover:underline">
+                  {relatedPost.title}
+                </h2>
+                {relatedPost.subtitle && (
+                  <p className="mt-3 text-xs tracking-wide">{relatedPost.subtitle}</p>
+                )}
+                <span className="mt-7 block w-6 border-t border-[#dedbd3]" />
+              </Link>
+            ))}
+          </div>
         </footer>
       </article>
     </main>
