@@ -1,8 +1,27 @@
 import Link from 'next/link'
+import { getPayload } from 'payload'
 import { IoChevronBackOutline } from 'react-icons/io5'
+import config from '@payload-config'
+import { notFound } from 'next/navigation'
+import Image from 'next/image'
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
+  const { slug: postSlug } = await params
+  const payload = await getPayload({ config })
+  const foundPosts = await payload.find({
+    collection: 'posts',
+    where: {
+      slug: { equals: postSlug },
+    },
+    limit: 1,
+    depth: 2,
+  })
+  const post = foundPosts.docs.at(0)
+
+  if (!post) {
+    notFound() // Raise 404
+  }
+
   return (
     <main className="min-h-screen text-[#292825]" style={{ fontFamily: 'Georgia, serif' }}>
       <article className="mx-auto max-w-[980px] px-5 pb-16 pt-3 sm:px-8">
@@ -14,11 +33,15 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             <IoChevronBackOutline className="h-3 w-3" /> Back to journal
           </Link>
         </header>
-        <img
-          src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1800&q=85"
-          alt="Open notebook and coffee overlooking misty mountains"
-          className="mb-12 h-[220px] w-full object-cover sm:h-[390px]"
-        />
+        {post.coverImage && typeof post.coverImage !== 'string' && (
+          <Image
+            src={post.coverImage.url as string}
+            alt={post.coverImage.alt}
+            width={500}
+            height={500}
+            className="mb-12 h-[220px] w-full object-cover sm:h-[390px]"
+          />
+        )}
         <section className="mx-auto max-w-[670px]">
           <div className="mb-3 flex gap-4 text-[8px] uppercase tracking-[0.16em] text-[#77736b]">
             <span>08 October 2024</span>
