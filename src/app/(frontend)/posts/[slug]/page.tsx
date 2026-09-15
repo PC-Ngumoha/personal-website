@@ -4,6 +4,7 @@ import { IoChevronBackOutline } from 'react-icons/io5'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
+import { RichText } from '@/components/RichText'
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug: postSlug } = await params
@@ -21,6 +22,12 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   if (!post) {
     notFound() // Raise 404
   }
+
+  const dateString = new Intl.DateTimeFormat('en-GB', {
+    dateStyle: 'full',
+  }).format(new Date(post.published_at as string))
+
+  // console.log(JSON.stringify(post.body!.root.children, null, 2))
 
   return (
     <main className="min-h-screen text-[#292825]" style={{ fontFamily: 'Georgia, serif' }}>
@@ -42,20 +49,29 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             className="mb-12 h-[220px] w-full object-cover sm:h-[390px]"
           />
         )}
-        <section className="mx-auto max-w-[670px]">
-          <div className="mb-3 flex gap-4 text-[8px] uppercase tracking-[0.16em] text-[#77736b]">
-            <span>08 October 2024</span>
-            <span>—</span>
-            <span className="text-[#788b75]">Ideas &amp; Culture</span>
+        <section className="mx-auto max-w-[670px] text-[16px] tracking-wide">
+          <div
+            className="mb-3 flex items-center gap-4 text-[10px] uppercase tracking-[0.16em] text-[#77736b]
+          font-mono"
+          >
+            <span>{dateString}</span>
+            <span>&#124;</span>
+            <span className="text-green-900 bg-green-50 p-1">
+              {post.theme && typeof post.theme !== 'string' && post.theme.name}
+            </span>
           </div>
-          <h1 className="max-w-[570px] text-4xl leading-[.98] tracking-[-.045em] sm:text-6xl">
-            The Architecture of Quiet: Designing for Focus in a Digital Age
+          <h1 className="max-w-[570px] text-5xl leading-[.98] tracking-[-.045em] sm:text-6xl">
+            {post.title}
           </h1>
-          <p className="mt-5 border-b border-[#dedbd3] pb-6 text-[11px] italic leading-5 text-[#77736b]">
-            Exploring the intersections of minimalism, spatial design, and digital well-being
-            through the lens of architectural restraint.
-          </p>
-          <div className="mt-8 text-[11px] leading-[1.9] text-[#4e4b45]">
+          {post.subtitle && (
+            <blockquote
+              className="mt-5 border-b border-gray-300 pb-6 text-[19px] italic leading-5 text-[#77736b]
+          max-w-[570px] tracking-wide [word-spacing:2px] border-l-4 border-l-green-900 pl-6 pt-3"
+            >
+              {post.subtitle}
+            </blockquote>
+          )}
+          {/* <div className="mt-8 leading-[1.9] text-[#4e4b45]">
             <p>
               The promise of modern productivity is clear: more often than ever, we are surrounded
               by tools designed to keep us moving. But in the pursuit of constant progress, we have
@@ -103,9 +119,15 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               environments that allow us to concentrate, reflect, and return to the world with
               greater intention.
             </p>
+          </div> */}
+          <div
+            className="mt-8 text-near-dark/70 richtext-paragraph richtext-blockquote
+          richtext-headings richtext-lists"
+          >
+            <RichText data={post.body} />
           </div>
         </section>
-        <footer className="mt-16 flex justify-between border-t border-[#dedbd3] pt-6 text-[8px] uppercase tracking-[.2em] text-[#77736b]">
+        <footer className="mt-16 flex justify-between border-t border-[#dedbd3] pt-6 text-sm uppercase tracking-[.2em] text-[#77736b]">
           <span>Continue reading</span>
           <span>All articles</span>
         </footer>

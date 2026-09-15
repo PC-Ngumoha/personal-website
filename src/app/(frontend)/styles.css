@@ -1,7 +1,42 @@
 @import 'tailwindcss';
 
+@layer components {
+  .richtext-blockquote {
+    @apply [&_blockquote]:bg-off-white-dark/40
+          [&_blockquote]:p-3 [&_blockquote]:border [&_blockquote]:border-green-900/30 [&_blockquote]:rounded-lg
+          [&_blockquote]:italic [&_blockquote]:leading-[1.4] [&_blockquote]:tracking-wide [&_blockquote]:border-l-4
+          [&_blockquote]:border-l-green-900/30 [&_blockquote]:text-near-dark/80;
+  }
+
+  .richtext-paragraph {
+    @apply [&_p]:mb-5 [&_p]:[word-spacing:5px] [&_p]:leading-normal;
+  }
+
+  .richtext-headings {
+    @apply [&_h1]:mb-4 [&_h1]:mt-8 [&_h1]:text-4xl [&_h1]:font-normal [&_h1]:leading-[1.05]
+          [&_h1]:tracking-[-.035em] [&_h1]:text-near-dark
+          [&_h2]:mb-4 [&_h2]:mt-8 [&_h2]:text-3xl [&_h2]:font-normal [&_h2]:leading-[1.05]
+          [&_h2]:tracking-[-.035em] [&_h2]:text-near-dark
+          [&_h3]:mb-4 [&_h3]:mt-8 [&_h3]:text-2xl [&_h3]:font-normal [&_h3]:leading-[1.05]
+          [&_h3]:tracking-[-.035em] [&_h3]:text-near-dark
+          [&_h4]:mb-4 [&_h4]:mt-8 [&_h4]:text-xl [&_h4]:font-normal [&_h4]:leading-[1.05]
+          [&_h4]:tracking-[-.035em] [&_h4]:text-near-dark
+          [&_h5]:mb-4 [&_h5]:mt-8 [&_h5]:text-lg [&_h5]:font-normal [&_h5]:leading-[1.05]
+          [&_h5]:tracking-[-.035em] [&_h5]:text-near-dark
+          [&_h6]:mb-4 [&_h6]:mt-8 [&_h6]:text-[16px] [&_h6]:font-normal [&_h6]:leading-[1.05]
+          [&_h6]:tracking-[-.035em] [&_h6]:text-near-dark;
+  }
+
+  .richtext-lists {
+    @apply [&_ul]:my-4 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-6
+          [&_ol]:my-4 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-6
+          [&_li]:pl-1;
+  }
+}
+
 @theme {
   --color-off-white: #faf9f6;
+  --color-off-white-dark: #f1efe9;
   --color-near-dark: #1a1a1a;
   --font-mono: var(--font-jetbrain-mono);
 }

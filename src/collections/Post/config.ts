@@ -1,4 +1,9 @@
-import { FixedToolbarFeature, lexicalEditor, BlocksFeature } from '@payloadcms/richtext-lexical'
+import {
+  FixedToolbarFeature,
+  lexicalEditor,
+  BlocksFeature,
+  BoldFeature,
+} from '@payloadcms/richtext-lexical'
 import { CollectionConfig, slugField } from 'payload'
 import { CodeBlock } from '@/blocks/Code/config'
 
@@ -73,7 +78,7 @@ export const Post: CollectionConfig = {
       type: 'richText' as const,
       editor: lexicalEditor({
         features: ({ defaultFeatures }) => [
-          ...defaultFeatures,
+          ...defaultFeatures.filter((feature) => feature.key !== 'checklist'), // Eliminates todo lists from list options
           FixedToolbarFeature(),
           BlocksFeature({ blocks: [CodeBlock] }),
         ],
