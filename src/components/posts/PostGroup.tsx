@@ -13,11 +13,13 @@ export default function PostGroup(props: {
   const [posts, setPosts] = useState<Post[]>(initialPosts)
   const [page, setPage] = useState(currentPage)
   const [hasMore, setHasMore] = useState(true)
+  const [selectedTheme, setSelectedTheme] = useState<string | undefined>()
+  const [isFiltering, setIsFiltering] = useState(false)
   const [isPending, startTransition] = useTransition()
 
   const handleFetchMorePosts = () => {
     startTransition(async () => {
-      const newPosts = await fetchPosts({ page: page + 1 })
+      const newPosts = await fetchPosts({ page: page + 1, theme: selectedTheme })
 
       if (newPosts.length === 0) {
         setHasMore(false)
@@ -29,6 +31,18 @@ export default function PostGroup(props: {
     })
   }
 
+  // TODO: This approach works but it's still a little bit buggy.
+  const handleFilteringPosts = (category: string | undefined) => {
+    setIsFiltering(true)
+    setHasMore(true)
+    startTransition(async () => {
+      const posts = await fetchPosts({ theme: category })
+
+      setPosts(posts)
+      setIsFiltering(false)
+    })
+  }
+
   return (
     <section className="px-6 pb-16 sm:px-12">
       <div className="mx-auto">
@@ -37,21 +51,44 @@ export default function PostGroup(props: {
         text-[10px] uppercase tracking-[0.12em] text-gray-500"
         >
           <span className="mr-2">Filter by theme:</span>
-          <button className="border-b border-near-dark pb-1 text-near-dark">All</button>
+          <button
+            className="border-b border-near-dark pb-1 text-near-dark"
+            onClick={() => {
+              setSelectedTheme(undefined)
+              handleFilteringPosts(selectedTheme)
+            }}
+          >
+            All
+          </button>
           {categories.map((category: Theme) => (
-            <button key={category.name} className="transition-colors hover:text-near-dark">
+            <button
+              key={category.name}
+              className="transition-colors hover:text-near-dark"
+              onClick={() => {
+                setSelectedTheme(category.name)
+                handleFilteringPosts(category.name)
+              }}
+            >
               {category.name}
             </button>
           ))}
         </div>
 
-        <div>
-          {posts.map((post: Post) => (
-            <PostCard post={post} key={post.id} />
-          ))}
-          {/* Display a loading skeleton */}
-          {isPending && Array.from({ length: 5 }).map((_, idx) => <PostCardSkeleton key={idx} />)}
-        </div>
+        {!isFiltering ? (
+          <div>
+            {posts.map((post: Post) => (
+              <PostCard post={post} key={post.id} />
+            ))}
+            {/* Display a loading skeleton */}
+            {isPending && Array.from({ length: 5 }).map((_, idx) => <PostCardSkeleton key={idx} />)}
+          </div>
+        ) : (
+          <>
+            {Array.from({ length: 5 }).map((_, idx) => (
+              <PostCardSkeleton key={idx} />
+            ))}
+          </>
+        )}
 
         {hasMore && (
           <button

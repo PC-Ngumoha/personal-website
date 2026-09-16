@@ -4,25 +4,52 @@ import config from '@payload-config'
 
 const payload = await getPayload({ config })
 
-export async function fetchPosts({ page }: { page: number }) {
-  const { docs: posts } = await payload.find({
-    collection: 'posts',
-    where: {
-      status: {
-        equals: 'published',
+export async function fetchPosts({ page = 1, theme }: { page?: number; theme?: string }) {
+  let result
+
+  if (theme) {
+    // filter posts by theme
+    result = await payload.find({
+      collection: 'posts',
+      where: {
+        and: [
+          {
+            status: {
+              equals: 'published',
+            },
+          },
+          {
+            'theme.name': {
+              equals: theme,
+            },
+          },
+        ],
       },
-    },
-    depth: 1,
-    limit: 5,
-    page,
-    sort: '-publishedAt',
-  })
+      depth: 1,
+      limit: 5,
+      page,
+      sort: '-publishedAt',
+    })
+  } else {
+    result = await payload.find({
+      collection: 'posts',
+      where: {
+        status: {
+          equals: 'published',
+        },
+      },
+      depth: 1,
+      limit: 5,
+      page,
+      sort: '-publishedAt',
+    })
+  }
 
   // Add a 3 second delay.
   // TODO: Remove this from production code
   await new Promise((resolve) => setTimeout(resolve, 3000))
 
-  return posts
+  return result.docs
 }
 
 export async function fetchCategories() {
