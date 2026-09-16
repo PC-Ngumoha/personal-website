@@ -18,6 +18,10 @@ export async function fetchPosts({ page }: { page: number }) {
     sort: '-publishedAt',
   })
 
+  // Add a 3 second delay.
+  // TODO: Remove this from production code
+  await new Promise((resolve) => setTimeout(resolve, 3000))
+
   return posts
 }
 

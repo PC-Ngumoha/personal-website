@@ -1,7 +1,7 @@
 'use client'
 import { Post, Theme } from '@/payload-types'
 import { useState, useTransition } from 'react'
-import PostCard from './PostCard'
+import PostCard, { PostCardSkeleton } from './PostCard'
 import { fetchPosts } from '@/actions'
 
 export default function PostGroup(props: {
@@ -49,6 +49,8 @@ export default function PostGroup(props: {
           {posts.map((post: Post) => (
             <PostCard post={post} key={post.id} />
           ))}
+          {/* Display a loading skeleton */}
+          {isPending && Array.from({ length: 5 }).map((_, idx) => <PostCardSkeleton key={idx} />)}
         </div>
 
         {hasMore && (

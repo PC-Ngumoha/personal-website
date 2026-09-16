@@ -2,6 +2,25 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Post } from '@/payload-types'
 
+export function PostCardSkeleton() {
+  return (
+    <article className="grid gap-6 border-b border-gray-200 py-8 sm:grid-cols-[1fr_3fr_150px] sm:gap-5 sm:py-8">
+      <div className="space-y-2">
+        <div className="h-3 w-24 animate-pulse rounded bg-gray-200" />
+        <div className="h-3 w-16 animate-pulse rounded bg-gray-200" />
+      </div>
+      <div>
+        <div className="mb-3 h-3 w-20 animate-pulse rounded bg-gray-200" />
+        <div className="h-7 w-3/4 animate-pulse rounded bg-gray-200" />
+        <div className="mt-4 h-4 w-full max-w-135 animate-pulse rounded bg-gray-200" />
+        <div className="mt-2 h-4 w-2/3 max-w-135 animate-pulse rounded bg-gray-200" />
+        <div className="mt-5 h-3 w-24 animate-pulse rounded bg-gray-200" />
+      </div>
+      <div className="hidden h-[75px] w-full animate-pulse rounded bg-gray-200 sm:block" />
+    </article>
+  )
+}
+
 export default function PostCard(props: { post: Post }) {
   const date = props.post.published_at ? new Date(props.post.published_at) : undefined
 
