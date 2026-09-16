@@ -36,7 +36,7 @@ export function CodeBlock(props: CodeBlockFields) {
             padding: '1rem',
             // background: 'transparent',
             borderRadius: 0,
-            fontSize: '0.875rem',
+            fontSize: 'clamp(0.6rem, 1.5vw, 0.875rem)', // Enables dynamic font-sizing
             lineHeight: '1.6',
           }}
           codeTagProps={{ className: 'font-mono' }}
