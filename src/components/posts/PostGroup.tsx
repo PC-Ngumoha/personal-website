@@ -18,6 +18,8 @@ export default function PostGroup(props: {
   const [isFiltering, setIsFiltering] = useState(false)
   const [isPending, startTransition] = useTransition()
 
+  console.log(posts)
+
   const handleFetchMorePosts = () => {
     startTransition(async () => {
       const newPosts = await fetchPosts({ page: page + 1, theme: selectedTheme })
@@ -54,8 +56,8 @@ export default function PostGroup(props: {
           <span className="mr-2">Filter by theme:</span>
           <button
             className={clsx(
-              selectedTheme === 'all' && 'border-b border-near-dark pb-1',
-              'text-near-dark',
+              selectedTheme === 'all' && 'border-b border-near-dark pb-1 text-near-dark',
+              'transition-colors hover:text-near-dark',
             )}
             onClick={() => {
               setSelectedTheme('all')
@@ -68,7 +70,7 @@ export default function PostGroup(props: {
             <button
               key={category.name}
               className={clsx(
-                selectedTheme === category.name && 'border-b border-near-dark pb-1',
+                selectedTheme === category.name && 'border-b border-near-dark pb-1 text-near-dark',
                 'transition-colors hover:text-near-dark',
               )}
               onClick={() => {

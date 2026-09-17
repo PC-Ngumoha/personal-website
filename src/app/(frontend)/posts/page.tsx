@@ -3,7 +3,7 @@ import PostGroup from '@/components/posts/PostGroup'
 
 export default async function PostsPage() {
   const siteSettings = await fetchSettings()
-  const posts = await fetchPosts({ page: 1 })
+  const posts = await fetchPosts({ page: 1, theme: 'all' })
   const categories = await fetchCategories()
 
   return (
