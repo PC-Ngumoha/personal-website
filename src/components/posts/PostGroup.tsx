@@ -3,6 +3,7 @@ import { Post, Theme } from '@/payload-types'
 import { useState, useTransition } from 'react'
 import PostCard, { PostCardSkeleton } from './PostCard'
 import { fetchPosts } from '@/actions'
+import clsx from 'clsx'
 
 export default function PostGroup(props: {
   initialPosts: Post[]
@@ -13,7 +14,7 @@ export default function PostGroup(props: {
   const [posts, setPosts] = useState<Post[]>(initialPosts)
   const [page, setPage] = useState(currentPage)
   const [hasMore, setHasMore] = useState(true)
-  const [selectedTheme, setSelectedTheme] = useState<string | undefined>()
+  const [selectedTheme, setSelectedTheme] = useState('all')
   const [isFiltering, setIsFiltering] = useState(false)
   const [isPending, startTransition] = useTransition()
 
@@ -32,11 +33,11 @@ export default function PostGroup(props: {
   }
 
   // TODO: This approach works but it's still a little bit buggy.
-  const handleFilteringPosts = (category: string | undefined) => {
+  const handleFilteringPosts = (category: string) => {
     setIsFiltering(true)
     setHasMore(true)
     startTransition(async () => {
-      const posts = await fetchPosts({ theme: category })
+      const posts = await fetchPosts({ page: 1, theme: category })
 
       setPosts(posts)
       setIsFiltering(false)
@@ -52,10 +53,13 @@ export default function PostGroup(props: {
         >
           <span className="mr-2">Filter by theme:</span>
           <button
-            className="border-b border-near-dark pb-1 text-near-dark"
+            className={clsx(
+              selectedTheme === 'all' && 'border-b border-near-dark pb-1',
+              'text-near-dark',
+            )}
             onClick={() => {
-              setSelectedTheme(undefined)
-              handleFilteringPosts(selectedTheme)
+              setSelectedTheme('all')
+              handleFilteringPosts('all')
             }}
           >
             All
@@ -63,7 +67,10 @@ export default function PostGroup(props: {
           {categories.map((category: Theme) => (
             <button
               key={category.name}
-              className="transition-colors hover:text-near-dark"
+              className={clsx(
+                selectedTheme === category.name && 'border-b border-near-dark pb-1',
+                'transition-colors hover:text-near-dark',
+              )}
               onClick={() => {
                 setSelectedTheme(category.name)
                 handleFilteringPosts(category.name)

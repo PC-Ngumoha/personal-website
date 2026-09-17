@@ -4,10 +4,10 @@ import config from '@payload-config'
 
 const payload = await getPayload({ config })
 
-export async function fetchPosts({ page = 1, theme }: { page?: number; theme?: string }) {
+export async function fetchPosts({ page, theme }: { page: number; theme: string }) {
   let result
 
-  if (theme) {
+  if (theme !== 'all') {
     // filter posts by theme
     result = await payload.find({
       collection: 'posts',
@@ -31,6 +31,7 @@ export async function fetchPosts({ page = 1, theme }: { page?: number; theme?: s
       sort: '-publishedAt',
     })
   } else {
+    // Fetches all posts unfiltered
     result = await payload.find({
       collection: 'posts',
       where: {
