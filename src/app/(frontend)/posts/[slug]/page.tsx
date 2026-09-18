@@ -1,39 +1,21 @@
 import Link from 'next/link'
-import { getPayload } from 'payload'
 import { IoBookmarkOutline, IoChevronBackOutline, IoShareOutline } from 'react-icons/io5'
-import config from '@payload-config'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { RichText } from '@/components/RichText'
+import { fetchPostFromSlug, fetchRelatedPosts, fetchSettings } from '@/actions'
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug: postSlug } = await params
-  const payload = await getPayload({ config })
-  const siteSettings = await payload.findGlobal({ slug: 'settings', depth: 2 })
-  const foundPosts = await payload.find({
-    collection: 'posts',
-    where: {
-      slug: { equals: postSlug },
-    },
-    limit: 1,
-    depth: 2,
-  })
-  const post = foundPosts.docs.at(0)
+  const { slug } = await params
+
+  const siteSettings = await fetchSettings()
+  const post = await fetchPostFromSlug({ slug })
 
   if (!post) {
     notFound() // Raise 404
   }
 
-  // TODO: Work on a better algorithm to find related posts
-  // The ideal system should also support blog posts in a series.
-  const relatedPosts = await payload.find({
-    collection: 'posts',
-    where: {
-      id: { not_equals: post.id },
-    },
-    sort: '-published_at',
-    limit: 2,
-  })
+  const relatedPosts = await fetchRelatedPosts({ post })
 
   const dateString = new Intl.DateTimeFormat('en-GB', {
     dateStyle: 'full',
