@@ -34,7 +34,7 @@ export function Navbar(props: { settings: Setting }) {
               </div>
             )}
           <span className="font-bold text-near-dark tracking-tighter [word-spacing:4px] text-xl">
-            {props.settings.navbar?.logo}'s Portfolio
+            {props.settings.navbar?.logo}
           </span>
         </div>
         <ul className="hidden md:flex items-center gap-10 font-light">
