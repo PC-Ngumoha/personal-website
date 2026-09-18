@@ -1,3 +1,4 @@
+import { lexicalEditor, ParagraphFeature } from '@payloadcms/richtext-lexical'
 import { GlobalConfig } from 'payload'
 
 export const SiteSettings: GlobalConfig = {
@@ -12,9 +13,24 @@ export const SiteSettings: GlobalConfig = {
       type: 'text',
     },
     {
+      name: 'role',
+      type: 'text',
+    },
+    {
+      name: 'location',
+      type: 'text',
+    },
+    {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
+    },
+    {
+      name: 'bio',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: () => [ParagraphFeature()],
+      }),
     },
     {
       name: 'socials',

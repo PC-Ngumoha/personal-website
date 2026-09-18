@@ -481,7 +481,24 @@ export interface Setting {
   id: string;
   siteName?: string | null;
   tagline?: string | null;
+  role?: string | null;
+  location?: string | null;
   image?: (string | null) | Media;
+  bio?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   socials?: {
     linkedin?: string | null;
     github?: string | null;
@@ -528,7 +545,10 @@ export interface Setting {
 export interface SettingsSelect<T extends boolean = true> {
   siteName?: T;
   tagline?: T;
+  role?: T;
+  location?: T;
   image?: T;
+  bio?: T;
   socials?:
     | T
     | {
