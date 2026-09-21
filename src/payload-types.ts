@@ -222,8 +222,13 @@ export interface Post {
  */
 export interface Project {
   id: string;
+  projectImage?: (string | null) | Media;
   title: string;
-  slug?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   summary?: string | null;
   body?: {
     root: {
@@ -246,8 +251,8 @@ export interface Project {
         id?: string | null;
       }[]
     | null;
-  links?: {
-    repo?: string | null;
+  links: {
+    repo: string;
     live?: string | null;
   };
   status?: ('in progress' | 'live' | 'shelved' | 'archived') | null;
@@ -412,7 +417,9 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
+  projectImage?: T;
   title?: T;
+  generateSlug?: T;
   slug?: T;
   summary?: T;
   body?: T;

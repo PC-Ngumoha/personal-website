@@ -1,9 +1,4 @@
-import {
-  FixedToolbarFeature,
-  lexicalEditor,
-  BlocksFeature,
-  BoldFeature,
-} from '@payloadcms/richtext-lexical'
+import { FixedToolbarFeature, lexicalEditor, BlocksFeature } from '@payloadcms/richtext-lexical'
 import { CollectionConfig, slugField } from 'payload'
 import { CodeBlock } from '@/blocks/Code/config'
 

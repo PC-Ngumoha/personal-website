@@ -1,5 +1,5 @@
 import { FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
-import { CollectionConfig } from 'payload'
+import { CollectionConfig, slugField } from 'payload'
 
 export const Project: CollectionConfig = {
   slug: 'projects',
@@ -8,14 +8,16 @@ export const Project: CollectionConfig = {
   },
   fields: [
     {
+      name: 'projectImage',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
       name: 'title',
       type: 'text',
       required: true,
     },
-    {
-      name: 'slug',
-      type: 'text',
-    },
+    slugField({ position: 'main' }),
     {
       name: 'summary',
       type: 'textarea',
@@ -44,6 +46,7 @@ export const Project: CollectionConfig = {
         {
           name: 'repo',
           type: 'text',
+          required: true,
         },
         {
           name: 'live',
