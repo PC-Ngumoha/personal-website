@@ -1,22 +1,10 @@
+import { fetchPosts, fetchSettings } from '@/actions'
 import { Post } from '@/payload-types'
-import config from '@/payload.config'
 import Link from 'next/link'
-import { getPayload } from 'payload'
 
 export default async function HomePage() {
-  const payload = await getPayload({ config })
-  const siteSettings = await payload.findGlobal({ slug: 'settings', depth: 1 })
-  const publishedPosts = await payload.find({
-    collection: 'posts',
-    where: { status: { equals: 'published' } },
-    sort: '-published_at',
-    limit: 3,
-    depth: 2,
-  })
-
-  // console.log(publishedPosts)
-
-  // console.log(siteSettings)
+  const siteSettings = await fetchSettings()
+  const publishedPosts = await fetchPosts({ page: 1, theme: 'all', limit: 3 })
 
   return (
     <>
@@ -65,14 +53,14 @@ export default async function HomePage() {
         </div>
 
         <div>
-          {publishedPosts.docs.map((post: Post) => (
+          {publishedPosts.map((post: Post) => (
             <Link
               key={post.title}
               href={`posts/${post.slug}`}
               className="grid gap-6 border-b border-black/10 py-7 transition-opacity hover:opacity-65 md:grid-cols-[7.5rem_1fr] md:gap-8"
             >
               <div className="font-mono text-[0.58rem] uppercase leading-normal tracking-[0.08em] text-near-dark/60">
-                <div>{new Date(post.published_at as string).toDateString()}</div>
+                <div className="mb-2">{new Date(post.published_at as string).toDateString()}</div>
                 <div className="text-green-900/70">
                   {post.theme && typeof post.theme !== 'string' && post.theme.name}
                 </div>

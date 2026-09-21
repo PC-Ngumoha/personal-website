@@ -5,7 +5,15 @@ import { Post } from '@/payload-types'
 
 const payload = await getPayload({ config })
 
-export async function fetchPosts({ page, theme }: { page: number; theme: string }) {
+export async function fetchPosts({
+  page,
+  theme,
+  limit = 5,
+}: {
+  page: number
+  theme: string
+  limit?: number
+}) {
   let result
 
   if (theme !== 'all') {
@@ -26,8 +34,8 @@ export async function fetchPosts({ page, theme }: { page: number; theme: string 
           },
         ],
       },
-      depth: 1,
-      limit: 5,
+      depth: 2,
+      limit,
       page,
       sort: '-publishedAt',
     })
@@ -40,8 +48,8 @@ export async function fetchPosts({ page, theme }: { page: number; theme: string 
           equals: 'published',
         },
       },
-      depth: 1,
-      limit: 5,
+      depth: 2,
+      limit,
       page,
       sort: '-publishedAt',
     })
