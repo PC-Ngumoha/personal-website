@@ -1,10 +1,12 @@
-import { fetchPosts, fetchSettings } from '@/actions'
+import { fetchPosts, fetchProjects, fetchSettings } from '@/actions'
 import { Post } from '@/payload-types'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default async function HomePage() {
   const siteSettings = await fetchSettings()
   const publishedPosts = await fetchPosts({ page: 1, theme: 'all', limit: 3 })
+  const topProjects = await fetchProjects({ page: 1, limit: 3 })
 
   return (
     <>
@@ -72,6 +74,49 @@ export default async function HomePage() {
                 <p className="mt-2 max-w-130 text-sm leading-[1.45] text-near-dark/60">
                   {post.subtitle}
                 </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+      {/* Selected Projects Section */}
+      <section className="border-t border-black/15 py-8">
+        <div className="flex items-center justify-between border-b border-black/15 pb-4">
+          <h2 className="font-serif text-2xl tracking-tight text-near-dark">Selected Projects</h2>
+          <Link
+            href="/projects"
+            className="text-[0.62rem] font-medium uppercase tracking-[0.16em] text-near-dark/65 transition-opacity hover:opacity-60"
+          >
+            All work <span className="ml-1 text-lg">→</span>
+          </Link>
+        </div>
+
+        <div className="grid gap-10 pt-10 md:grid-cols-3 md:gap-12">
+          {topProjects.map((project) => (
+            <Link key={project.title} href={`/projects/${project.slug}`} className="group block">
+              <div className="aspect-[1.55] overflow-hidden bg-black/5">
+                {project.projectImage && typeof project.projectImage !== 'string' && (
+                  <Image
+                    src={project.projectImage.url as string}
+                    alt={project.title}
+                    width={project.projectImage.width as number}
+                    height={project.projectImage.height as number}
+                    className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
+                  />
+                )}
+              </div>
+              <div className="flex items-end justify-between border-b border-black/15 pb-5 pt-4">
+                <div>
+                  <div className="font-mono text-[0.58rem] uppercase tracking-[0.08em] text-near-dark/60">
+                    {new Date(project.createdAt).getFullYear()}
+                  </div>
+                  <h3 className="mt-1 font-serif text-lg leading-tight tracking-tight text-near-dark">
+                    {project.title}
+                  </h3>
+                </div>
+                <span className="text-sm text-near-dark/70 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
+                  ↗
+                </span>
               </div>
             </Link>
           ))}
