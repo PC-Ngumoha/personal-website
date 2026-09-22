@@ -100,3 +100,16 @@ export async function fetchCategories() {
 export async function fetchSettings() {
   return await payload.findGlobal({ slug: 'settings', depth: 2 })
 }
+
+export async function fetchProjects({ page, limit = 4 }: { page: number; limit?: number }) {
+  const result = await payload.find({
+    collection: 'projects',
+    page,
+    limit,
+  })
+
+  // TODO: Remove this delay of 3 seconds from the actual production code
+  await new Promise((resolve) => setTimeout(resolve, 3000))
+
+  return result.docs
+}
