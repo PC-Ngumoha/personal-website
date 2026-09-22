@@ -2,9 +2,10 @@
 
 import { Project } from '@/payload-types'
 import { useState, useTransition } from 'react'
-import Image from 'next/image'
 import ProjectCard, { ProjectCardSkeleton } from './ProjectCard'
 import { fetchProjects } from '@/actions'
+import { ProjectType } from '@/types'
+import clsx from 'clsx'
 
 export default function ProjectGroup(props: { initialProjects: Project[] }) {
   const { initialProjects } = props
@@ -12,10 +13,12 @@ export default function ProjectGroup(props: { initialProjects: Project[] }) {
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
   const [isPending, startTransition] = useTransition()
+  const [selectedType, setSelectedType] = useState<ProjectType>('all')
+  const [isFiltering, setIsFiltering] = useState(false)
 
   const handleFetchMoreProjects = () => {
     startTransition(async () => {
-      const newProjects = await fetchProjects({ page: page + 1 })
+      const newProjects = await fetchProjects({ page: page + 1, projectType: selectedType })
 
       if (newProjects.length === 0) {
         setHasMore(false)
@@ -27,6 +30,18 @@ export default function ProjectGroup(props: { initialProjects: Project[] }) {
     })
   }
 
+  const handleProjectFiltering = (type: ProjectType) => {
+    setIsFiltering(true)
+    setHasMore(true)
+    startTransition(async () => {
+      const projects = await fetchProjects({ page: 1, projectType: type })
+
+      setProjects(projects)
+      setPage(1)
+      setIsFiltering(false)
+    })
+  }
+
   return (
     <section className="mx-auto w-[90%] px-10 pb-24 pt-12 max-[600px]:px-5 max-[600px]:pt-8">
       <div
@@ -34,11 +49,29 @@ export default function ProjectGroup(props: { initialProjects: Project[] }) {
         uppercase tracking-[.18em] text-[#6d6b68]"
       >
         <nav className="flex gap-6">
-          <button className="border-b border-[#59605a] pb-3 font-bold text-[#252422]">
+          <button
+            className={clsx(
+              selectedType === 'all' && 'border-b border-near-dark pb-3 font-bold text-near-dark',
+            )}
+            onClick={() => {
+              setSelectedType('all')
+              handleProjectFiltering('all')
+            }}
+          >
             All projects
           </button>
           {['learning', 'portfolio'].map((type) => (
-            <button key={type} className="capitalize">
+            <button
+              key={type}
+              className={clsx(
+                selectedType === type && 'border-b border-near-dark pb-3 font-bold text-near-dark',
+                'capitalize',
+              )}
+              onClick={() => {
+                setSelectedType(type as ProjectType)
+                handleProjectFiltering(type as ProjectType)
+              }}
+            >
               {type}
             </button>
           ))}
@@ -47,12 +80,24 @@ export default function ProjectGroup(props: { initialProjects: Project[] }) {
       </div>
 
       <div className="grid grid-cols-2 gap-x-5 gap-y-11 max-[600px]:grid-cols-1">
-        {projects.map((project: Project) => (
-          <ProjectCard key={project.title} project={project} />
-        ))}
+        {!isFiltering ? (
+          <>
+            {projects.map((project: Project) => (
+              <ProjectCard key={project.title} project={project} />
+            ))}
 
-        {isPending && Array.from({ length: 2 }).map((_, idx) => <ProjectCardSkeleton key={idx} />)}
+            {isPending &&
+              Array.from({ length: 2 }).map((_, idx) => <ProjectCardSkeleton key={idx} />)}
+          </>
+        ) : (
+          <>
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <ProjectCardSkeleton key={idx} />
+            ))}
+          </>
+        )}
       </div>
+
       {hasMore && (
         <button
           className="mx-auto my-10 border border-near-dark block py-5 px-8 text-near-dark

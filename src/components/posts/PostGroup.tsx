@@ -42,6 +42,7 @@ export default function PostGroup(props: {
       const posts = await fetchPosts({ page: 1, theme: category })
 
       setPosts(posts)
+      setPage(1)
       setIsFiltering(false)
     })
   }

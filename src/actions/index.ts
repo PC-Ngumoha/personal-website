@@ -2,6 +2,7 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { Post } from '@/payload-types'
+import { ProjectType } from '@/types'
 
 const payload = await getPayload({ config })
 
@@ -101,12 +102,35 @@ export async function fetchSettings() {
   return await payload.findGlobal({ slug: 'settings', depth: 2 })
 }
 
-export async function fetchProjects({ page, limit = 4 }: { page: number; limit?: number }) {
-  const result = await payload.find({
-    collection: 'projects',
-    page,
-    limit,
-  })
+export async function fetchProjects({
+  page,
+  projectType = 'all',
+  limit = 4,
+}: {
+  page: number
+  limit?: number
+  projectType?: ProjectType
+}) {
+  let result
+
+  if (projectType === 'all') {
+    result = await payload.find({
+      collection: 'projects',
+      page,
+      limit,
+    })
+  } else {
+    result = await payload.find({
+      collection: 'projects',
+      where: {
+        projectType: {
+          equals: projectType,
+        },
+      },
+      page,
+      limit,
+    })
+  }
 
   // TODO: Remove this delay of 3 seconds from the actual production code
   await new Promise((resolve) => setTimeout(resolve, 3000))
