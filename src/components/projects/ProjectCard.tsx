@@ -1,5 +1,6 @@
 import { Project } from '@/payload-types'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export function ProjectCardSkeleton() {
   return (
@@ -38,17 +39,19 @@ export default function ProjectCard(props: { project: Project }) {
         {new Date(project.createdAt).getFullYear()} / {project.status}
       </p>
       <h2 className="mb-2 font-serif text-[16px] font-normal text-[#252422]">{project.title}</h2>
-      <p className="min-h-[47px] font-serif text-[12px] leading-[1.45] text-[#77736f]">
-        {project.summary}
+      <p className="min-h-[47px] font-serif text-[14px] leading-[1.45] text-[#77736f]">
+        {project.summary!.length > 200
+          ? `${project.summary!.substring(0, 200)} ...`
+          : project.summary}
       </p>
       <p className="mt-3 font-mono text-[10px] text-[#59605a] tracking-wide">{tags}</p>
-      <a
-        href="#"
+      <Link
+        href={`projects/${project.slug}`}
         className="mt-5 inline-flex items-center gap-2 font-serif text-[12px] text-near-dark/65"
       >
-        <span className="underline underline-offset-2"> Read Case Study</span>{' '}
+        <span className="underline underline-offset-2"> View project</span>{' '}
         <span className="text-[11px] no-underline">→</span>
-      </a>
+      </Link>
     </article>
   )
 }
