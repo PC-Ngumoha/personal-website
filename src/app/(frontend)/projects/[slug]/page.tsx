@@ -44,7 +44,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </div>
           <nav className="flex gap-6 pb-1 font-mono text-[12px] uppercase tracking-[0.08em]">
             <a
-              href="#repository"
+              href={project.links.repo}
               target="_blank"
               className="hover:underline flex items-center gap-2"
             >
