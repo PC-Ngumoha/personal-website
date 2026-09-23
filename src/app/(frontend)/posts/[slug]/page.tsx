@@ -113,7 +113,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             </Link>
           </div>
           <div className="grid gap-10 sm:grid-cols-2">
-            {relatedPosts.docs.map((relatedPost) => (
+            {relatedPosts.map((relatedPost) => (
               <Link
                 key={relatedPost.id}
                 href={`/posts/${relatedPost.slug}`}

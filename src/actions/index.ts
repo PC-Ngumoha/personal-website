@@ -1,7 +1,7 @@
 'use server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { Post } from '@/payload-types'
+import { Post, Project } from '@/payload-types'
 import { ProjectType } from '@/types'
 
 const payload = await getPayload({ config })
@@ -83,7 +83,7 @@ export async function fetchPostFromSlug({ slug }: { slug: string }) {
 // TODO: Work on a better algorithm to find related posts
 // The ideal system should also support blog posts in a series.
 export async function fetchRelatedPosts({ post }: { post: Post }) {
-  return await payload.find({
+  const results = await payload.find({
     collection: 'posts',
     where: {
       id: { not_equals: post.id },
@@ -91,6 +91,8 @@ export async function fetchRelatedPosts({ post }: { post: Post }) {
     sort: '-published_at',
     limit: 2,
   })
+
+  return results.docs
 }
 
 export async function fetchCategories() {
@@ -136,4 +138,38 @@ export async function fetchProjects({
   await new Promise((resolve) => setTimeout(resolve, 3000))
 
   return result.docs
+}
+
+export async function fetchProjectFromSlug({ slug }: { slug: string }) {
+  const foundProjects = await payload.find({
+    collection: 'projects',
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+    limit: 1,
+    depth: 2,
+  })
+
+  // TODO: Remove this delay of 3 seconds from the actual production code
+  await new Promise((resolve) => setTimeout(resolve, 3000))
+
+  return foundProjects.docs.at(0)
+}
+
+// TODO: This logic can be further improved to get truly related projects
+export async function fetchRelatedProjects({ project }: { project: Project }) {
+  const results = await payload.find({
+    collection: 'projects',
+    where: {
+      id: {
+        not_equals: project.id,
+      },
+    },
+    sort: '-createdAt',
+    limit: 2,
+  })
+
+  return results.docs
 }
