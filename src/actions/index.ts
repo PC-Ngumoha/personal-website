@@ -101,6 +101,8 @@ export async function fetchCategories() {
 }
 
 export async function fetchSettings() {
+  // TODO: Remove this from production code
+  await new Promise((resolve) => setTimeout(resolve, 3000))
   return await payload.findGlobal({ slug: 'settings', depth: 2 })
 }
 
