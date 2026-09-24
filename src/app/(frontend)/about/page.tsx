@@ -1,14 +1,36 @@
 import { fetchSettings } from '@/actions'
 import { RichText } from '@/components/RichText'
 import Image from 'next/image'
+import { FaRegEnvelope, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
 import { GoLink } from 'react-icons/go'
+import { LuArrowUpRight } from 'react-icons/lu'
+import { IconType } from 'react-icons/lib'
 
 export default async function AboutPage() {
   const siteSettings = await fetchSettings()
-  const links = [
-    ['Email', siteSettings.socials?.email],
-    ['Linkedin', siteSettings.socials?.linkedin],
-    ['Twitter', siteSettings.socials?.twitter],
+
+  type LinkType = {
+    label: string
+    uri: string
+    icon: IconType
+  }
+
+  const links: LinkType[] = [
+    {
+      label: 'Email',
+      uri: siteSettings.socials?.email ?? '',
+      icon: FaRegEnvelope,
+    },
+    {
+      label: 'Linkedin',
+      uri: siteSettings.socials?.linkedin ?? '',
+      icon: FaLinkedinIn,
+    },
+    {
+      label: 'Twitter',
+      uri: siteSettings.socials?.twitter ?? '',
+      icon: FaXTwitter,
+    },
   ]
 
   return (
@@ -75,39 +97,51 @@ export default async function AboutPage() {
       <section className="mx-auto grid max-w-[924px] gap-12 pt-[38px] lg:grid-cols-[276px_minmax(0,1fr)] lg:gap-[49px]">
         <div />
         <div>
-          <div className="mb-7 flex items-center gap-3 font-mono text-[16px] uppercase tracking-[0.25em] text-[#292826]">
-            <span aria-hidden="true" className=" leading-none text-[#52685f]">
+          <div className="mb-7 flex items-center gap-3 font-mono text-[16px] uppercase tracking-[0.25em] text-near-dark/45">
+            <span aria-hidden="true" className=" leading-none text-near-dark">
               <GoLink />
             </span>
             Connect / Correspondence
           </div>
           <div className="space-y-[18px]">
-            {links.map(([label, href], index) => {
-              const icons = ['✉', '⊕', '↗']
+            {links.map(({ label, uri, icon: Icon }: LinkType) => {
+              // Removing unnecessary prefixes from the links
+              const displayedUri = uri.replace('https://', '').replace('www.', '').toLowerCase()
 
               return (
                 <a
                   key={label as string}
-                  href={label?.toLowerCase() === 'email' ? `mailto:${href}` : (href as string)}
+                  href={label?.toLowerCase() === 'email' ? `mailto:${uri}` : uri}
                   target="_blank"
-                  className="group block border border-[#dfded9] px-[19px] py-[17px] transition-colors hover:border-[#aaa9a3]"
+                  className="group block border border-gray-200 px-[19px] py-[17px] transition-colors hover:border-gray-400"
                 >
                   <div className="flex items-start justify-between">
-                    <span aria-hidden="true" className="text-xl leading-none text-[#65645f]">
-                      {icons[index]}
+                    <span
+                      aria-hidden="true"
+                      className="text-xl leading-none text-gray-500
+                    group-hover:text-gray-700"
+                    >
+                      <Icon className="w-6 h-6" />
                     </span>
                     <span
                       aria-hidden="true"
-                      className="text-[11px] text-[#b8b7b1] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      className="text-[11px] text-gray-400 transition-transform group-hover:translate-x-0.5
+                      group-hover:-translate-y-0.5 group-hover:text-near-dark"
                     >
-                      ↗
+                      <LuArrowUpRight className="w-4 h-4" />
                     </span>
                   </div>
-                  <div className="mt-3 font-mono text-xs uppercase tracking-[0.2em] text-[#65645f]">
+                  <div
+                    className="mt-3 font-mono text-xs uppercase tracking-[0.2em] text-gray-400
+                  group-hover:text-near-dark ease-in duration-75"
+                  >
                     {label}
                   </div>
-                  <div className="mt-1 font-serif text-[17px] tracking-[-0.01em] text-[#292826]">
-                    {href}
+                  <div
+                    className="mt-1 font-serif text-[17px] tracking-[-0.01em] text-near-dark
+                  group-hover:text-gray-400 ease-in duration-75"
+                  >
+                    {displayedUri}
                   </div>
                 </a>
               )
