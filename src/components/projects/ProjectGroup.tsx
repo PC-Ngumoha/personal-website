@@ -76,19 +76,27 @@ export default function ProjectGroup(props: { initialProjects: Project[] }) {
             </button>
           ))}
         </nav>
-        <span>Showing {projects.length} items</span>
+        <span>
+          Showing {projects.length} item{projects.length >= 2 && 's'}
+        </span>
       </div>
 
       <div className="grid grid-cols-2 gap-x-5 gap-y-11 max-[600px]:grid-cols-1">
         {!isFiltering ? (
-          <>
-            {projects.map((project: Project) => (
-              <ProjectCard key={project.title} project={project} />
-            ))}
+          projects.length > 0 ? (
+            <div>
+              {projects.map((project: Project) => (
+                <ProjectCard key={project.title} project={project} />
+              ))}
 
-            {isPending &&
-              Array.from({ length: 2 }).map((_, idx) => <ProjectCardSkeleton key={idx} />)}
-          </>
+              {isPending &&
+                Array.from({ length: 2 }).map((_, idx) => <ProjectCardSkeleton key={idx} />)}
+            </div>
+          ) : (
+            <div className="col-span-2 text-center font-mono text-sm uppercase tracking-[0.12em] max-[600px]:col-span-1">
+              No projects found
+            </div>
+          )
         ) : (
           <>
             {Array.from({ length: 4 }).map((_, idx) => (
@@ -98,7 +106,7 @@ export default function ProjectGroup(props: { initialProjects: Project[] }) {
         )}
       </div>
 
-      {hasMore && (
+      {hasMore && projects.length > 0 && (
         <button
           className="mx-auto my-10 border border-near-dark block py-5 px-8 text-near-dark
         hover:border-gray-300 duration-200 ease-in"

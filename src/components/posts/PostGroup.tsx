@@ -85,13 +85,20 @@ export default function PostGroup(props: {
         </div>
 
         {!isFiltering ? (
-          <div>
-            {posts.map((post: Post) => (
-              <PostCard post={post} key={post.id} />
-            ))}
-            {/* Display a loading skeleton */}
-            {isPending && Array.from({ length: 5 }).map((_, idx) => <PostCardSkeleton key={idx} />)}
-          </div>
+          posts.length > 0 ? (
+            <div>
+              {posts.map((post: Post) => (
+                <PostCard post={post} key={post.id} />
+              ))}
+              {/* Display a loading skeleton */}
+              {isPending &&
+                Array.from({ length: 5 }).map((_, idx) => <PostCardSkeleton key={idx} />)}
+            </div>
+          ) : (
+            <div className="py-16 text-center font-mono text-sm uppercase tracking-[0.12em] text-gray-500">
+              No posts found
+            </div>
+          )
         ) : (
           <>
             {Array.from({ length: 5 }).map((_, idx) => (
@@ -100,7 +107,7 @@ export default function PostGroup(props: {
           </>
         )}
 
-        {hasMore && (
+        {hasMore && posts.length > 0 && (
           <button
             className="mx-auto mt-10 block border border-gray-200 px-9 py-3 font-mono text-sm uppercase tracking-[0.12em] 
         text-near-dark hover:border-gray-400"

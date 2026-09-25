@@ -101,26 +101,29 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             ))}
           </div>
 
-          <div className="mt-28 grid grid-cols-2 gap-8 border-t border-[#d8d6ce] pt-16 sm:mt-[122px]">
-            <Link href={`/projects/${relatedProjects.at(0)?.slug}`} className="group">
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#7c7a73]">
-                Previous project
-              </p>
-              <span className="mt-3 flex items-center gap-2 font-serif text-[17px] group-hover:underline">
-                <FaArrowLeft className="w-3 h-3" />
-                <span>{relatedProjects.at(0)?.title}</span>
-              </span>
-            </Link>
-            <Link href={`/projects/${relatedProjects.at(1)?.slug}`} className="group text-right">
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#7c7a73]">
-                Next project
-              </p>
-              <span className="mt-3 flex items-center justify-end gap-2 font-serif text-[17px] group-hover:underline">
-                <span>{relatedProjects.at(1)?.title}</span>
-                <FaArrowRight className="w-3 h-3" />
-              </span>
-            </Link>
-          </div>
+          {/* If you don't find at least two posts, don't display this section */}
+          {relatedProjects.length >= 2 && (
+            <div className="mt-28 grid grid-cols-2 gap-8 border-t border-[#d8d6ce] pt-16 sm:mt-[122px]">
+              <Link href={`/projects/${relatedProjects.at(0)?.slug}`} className="group">
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#7c7a73]">
+                  Previous project
+                </p>
+                <span className="mt-3 flex items-center gap-2 font-serif text-[17px] group-hover:underline">
+                  <FaArrowLeft className="w-3 h-3" />
+                  <span>{relatedProjects.at(0)?.title}</span>
+                </span>
+              </Link>
+              <Link href={`/projects/${relatedProjects.at(1)?.slug}`} className="group text-right">
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#7c7a73]">
+                  Next project
+                </p>
+                <span className="mt-3 flex items-center justify-end gap-2 font-serif text-[17px] group-hover:underline">
+                  <span>{relatedProjects.at(1)?.title}</span>
+                  <FaArrowRight className="w-3 h-3" />
+                </span>
+              </Link>
+            </div>
+          )}
         </footer>
       </div>
     </main>
