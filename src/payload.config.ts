@@ -1,5 +1,6 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { cloudStoragePlugin } from '@payloadcms/plugin-cloud-storage'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -10,6 +11,7 @@ import { Media } from './collections/Media'
 import { Theme } from './collections/Theme/config'
 import { Post } from './collections/Post/config'
 import { Project } from './collections/Project/config'
+import { cloudinaryAdapter } from './services/cloudinaryAdapter'
 
 // import { Navbar } from './globals/Navbar'
 import { SiteSettings } from './globals/SiteSettings'
@@ -35,5 +37,15 @@ export default buildConfig({
     url: process.env.DATABASE_URL || '',
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    cloudStoragePlugin({
+      collections: {
+        media: {
+          adapter: cloudinaryAdapter(),
+          disableLocalStorage: true,
+          disablePayloadAccessControl: true,
+        },
+      },
+    }),
+  ],
 })

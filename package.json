@@ -20,9 +20,11 @@
   "dependencies": {
     "@payloadcms/db-mongodb": "3.88.0",
     "@payloadcms/next": "3.88.0",
+    "@payloadcms/plugin-cloud-storage": "^3.90.2",
     "@payloadcms/richtext-lexical": "3.88.0",
     "@payloadcms/ui": "3.88.0",
     "@tailwindcss/postcss": "^4.3.3",
+    "cloudinary": "^2.11.0",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
