@@ -87,7 +87,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </section>
 
         <footer className="mx-auto border-t border-[#d8d6ce] pb-16 pt-14 max-w-[700px] sm:pt-[62px]">
-          <p className="font-mono text-[9px] uppercase tracking-[0.23em] text-[#7c7a73]">
+          <p className="font-mono text-[9px] uppercase tracking-[0.23em] text-gray-500">
             Stack &amp; technologies
           </p>
           <div className="mt-7 flex flex-wrap gap-2">
