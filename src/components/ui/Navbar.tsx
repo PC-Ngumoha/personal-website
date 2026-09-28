@@ -20,10 +20,15 @@ export function Navbar(props: { settings: Setting }) {
     <>
       <nav className="mx-auto sm:flex-2 w-full h-full flex justify-between items-center max-w-350 p-3">
         <div className="flex items-center gap-2 ">
-          {props.settings.image &&
-            typeof props.settings.image !== 'string' &&
-            props.settings.image.url && (
-              <div className="h-10 w-10 rounded-full overflow-clip">
+          <div
+            className={clsx(
+              'h-14 w-14 rounded-full overflow-clip',
+              props.settings.image ? '' : 'border border-dashed border-near-dark/40',
+            )}
+          >
+            {props.settings.image &&
+              typeof props.settings.image !== 'string' &&
+              props.settings.image.url && (
                 <Image
                   src={props.settings.image.url}
                   alt={props.settings.image.alt}
@@ -31,8 +36,8 @@ export function Navbar(props: { settings: Setting }) {
                   width={300}
                   className="w-full h-full object-center"
                 />
-              </div>
-            )}
+              )}
+          </div>
           <span className="font-bold text-near-dark tracking-tighter [word-spacing:4px] text-xl">
             {props.settings.navbar?.logo}
           </span>

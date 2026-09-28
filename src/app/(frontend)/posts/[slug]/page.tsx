@@ -36,8 +36,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           <Image
             src={post.coverImage.url as string}
             alt={post.coverImage.alt}
-            width={2000}
-            height={2000}
+            width={post.coverImage.width as number}
+            height={post.coverImage.height as number}
             className="mb-12 h-[220px] w-full object-cover sm:h-[390px]"
           />
         )}

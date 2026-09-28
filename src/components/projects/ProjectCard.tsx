@@ -33,6 +33,7 @@ export default function ProjectCard(props: { project: Project }) {
           width={project.projectImage.width as number}
           height={project.projectImage.height as number}
           className="mb-2 h-[300px] w-full object-cover grayscale-[15%] max-[600px]:h-[220px]"
+          loading="lazy"
         />
       )}
       <p className="mb-1 font-sans text-[10px] uppercase tracking-[.12em] text-[#77736f]">

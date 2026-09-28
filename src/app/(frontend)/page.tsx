@@ -109,6 +109,7 @@ export default async function HomePage() {
                       alt={project.title}
                       width={project.projectImage.width as number}
                       height={project.projectImage.height as number}
+                      loading="lazy"
                       className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
                     />
                   )}

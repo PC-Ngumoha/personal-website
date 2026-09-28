@@ -70,6 +70,7 @@ export default function PostCard(props: { post: Post }) {
           width={300}
           height={300}
           className="hidden h-[75px] w-full object-cover sm:block"
+          loading="lazy"
         />
       )}
     </article>

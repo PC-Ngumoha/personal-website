@@ -18,7 +18,7 @@ export default function PostGroup(props: {
   const [isFiltering, setIsFiltering] = useState(false)
   const [isPending, startTransition] = useTransition()
 
-  console.log(posts)
+  // console.log(posts)
 
   const handleFetchMorePosts = () => {
     startTransition(async () => {

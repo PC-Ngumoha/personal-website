@@ -5,6 +5,7 @@ import { FaRegEnvelope, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
 import { GoLink } from 'react-icons/go'
 import { LuArrowUpRight } from 'react-icons/lu'
 import { IconType } from 'react-icons/lib'
+import clsx from 'clsx'
 
 export default async function AboutPage() {
   const siteSettings = await fetchSettings()
@@ -38,7 +39,12 @@ export default async function AboutPage() {
       <section className="mx-auto max-w-[924px] border-b border-[#dfded9] pb-[74px]">
         <div className="grid gap-12 lg:grid-cols-[276px_minmax(0,1fr)] lg:gap-[49px]">
           <aside>
-            <div className="h-[275px] overflow-hidden border border-[#d9d8d4] bg-[#f1f0ed]">
+            <div
+              className={clsx(
+                'h-[275px] overflow-hidden',
+                siteSettings.image ? '' : 'border border-gray-300',
+              )}
+            >
               {siteSettings.image && typeof siteSettings.image !== 'string' && (
                 <Image
                   src={siteSettings.image.url as string}
