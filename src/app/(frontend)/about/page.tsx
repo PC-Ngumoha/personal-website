@@ -35,8 +35,8 @@ export default async function AboutPage() {
   ]
 
   return (
-    <main className="min-h-screen bg-[#faf9f6] px-6 py-7 text-[#292826] sm:px-10 lg:px-24">
-      <section className="mx-auto max-w-[924px] border-b border-[#dfded9] pb-[74px]">
+    <main className="min-h-screen bg-off-white px-6 py-7 text-near-dark sm:px-10 lg:px-24">
+      <section className="mx-auto max-w-[924px] border-b border-green-900/40 pb-[74px]">
         <div className="grid gap-12 lg:grid-cols-[276px_minmax(0,1fr)] lg:gap-[49px]">
           <aside>
             <div
@@ -55,7 +55,7 @@ export default async function AboutPage() {
                 />
               )}
             </div>
-            <div className="mt-6 space-y-2 font-mono text-[9px] uppercase tracking-[0.18em] text-[#65645f]">
+            <div className="mt-6 space-y-2 font-mono text-[9px] uppercase tracking-[0.18em] text-gray-500">
               <p className="flex items-center gap-2">
                 <span aria-hidden="true" className="text-[11px]">
                   ⌖
@@ -77,7 +77,7 @@ export default async function AboutPage() {
             </h1>
             <div className="mt-5 h-px w-[75px] bg-green-900/40" />
             <div
-              className="mt-9 space-y-7 font-serif text-[15.5px] leading-[1.47] tracking-[0.01em] text-[#73716d]
+              className="mt-9 space-y-7 font-serif text-[15.5px] leading-[1.47] tracking-[0.01em] text-gray-500
             richtext-paragraph"
             >
               <RichText data={siteSettings.bio} />
@@ -87,7 +87,7 @@ export default async function AboutPage() {
               target="_blank"
               rel="noreferrer noopener"
               className="mt-12 inline-flex items-center gap-3 border-b border-green-900/40 pb-2 font-serif
-              text-[15px] text-[#292a28] hover:border-[#52685f]"
+              text-[15px] text-near-dark hover:border-gray-500"
             >
               <span aria-hidden="true" className="text-[17px]">
                 ♧
