@@ -27,7 +27,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <div className="mx-auto max-w-[1090px]">
         <Link
           href="/projects"
-          className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#65635e] transition-colors hover:text-[#242321]
+          className="font-mono text-[9px] uppercase tracking-[0.2em] text-gray-500 transition-colors hover:text-near-dark/50
           flex items-center gap-2"
         >
           <FaArrowLeft className="w-2 h-2" /> Back to projects
@@ -35,7 +35,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         <header className="mt-5 flex flex-col gap-7 sm:mt-7 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.23em] text-[#7c7a73]">
+            <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.23em] text-gray-500">
               {dateString}
             </p>
             <h1 className="max-w-[580px] font-serif text-[35px] lg:text-[60px] leading-[0.96] tracking-[-0.04em]">
@@ -62,7 +62,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </nav>
         </header>
 
-        <div className="mt-8 aspect-[1.88] w-full overflow-hidden bg-[#d8d6ce] sm:mt-7">
+        <div className="mt-8 aspect-[1.88] w-full overflow-hidden bg-gray-300 sm:mt-7">
           {project?.projectImage && typeof project.projectImage !== 'string' && (
             <Image
               src={project.projectImage.url as string}
@@ -76,8 +76,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         <section className="mx-auto mt-14 max-w-[610px] pb-16 sm:mt-[55px] flex flex-col items-center">
           <p
-            className="font-serif text-[17px] italic leading-[1.45] tracking-[0.01em] text-[#77746e]
-          border-b border-[#e2e0da] pb-8 mb-8"
+            className="font-serif text-[17px] italic leading-[1.45] tracking-[0.01em] text-gray-500
+          border-b border-gray-300 pb-8 mb-8"
           >
             {project?.summary}
           </p>
@@ -86,7 +86,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
 
-        <footer className="mx-auto border-t border-[#d8d6ce] pb-16 pt-14 max-w-[700px] sm:pt-[62px]">
+        <footer className="mx-auto border-t border-gray-300 pb-16 pt-14 max-w-[700px] sm:pt-[62px]">
           <p className="font-mono text-[9px] uppercase tracking-[0.23em] text-gray-500">
             Stack &amp; technologies
           </p>
@@ -94,7 +94,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             {project?.techStack!.map((stack) => (
               <span
                 key={stack.id}
-                className="bg-[#f2f2ed] px-3 py-2 font-mono text-[9px] text-[#4d4b46]"
+                className="bg-gray-300 px-3 py-2 font-mono text-[9px] text-gray-500"
               >
                 {stack.technology}
               </span>
@@ -103,9 +103,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
           {/* If you don't find at least two posts, don't display this section */}
           {relatedProjects.length >= 2 && (
-            <div className="mt-28 grid grid-cols-2 gap-8 border-t border-[#d8d6ce] pt-16 sm:mt-[122px]">
+            <div className="mt-28 grid grid-cols-2 gap-8 border-t border-gray-300 pt-16 sm:mt-[122px]">
               <Link href={`/projects/${relatedProjects.at(0)?.slug}`} className="group">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#7c7a73]">
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-gray-500">
                   Previous project
                 </p>
                 <span className="mt-3 flex items-center gap-2 font-serif text-[17px] group-hover:underline">
@@ -114,7 +114,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 </span>
               </Link>
               <Link href={`/projects/${relatedProjects.at(1)?.slug}`} className="group text-right">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#7c7a73]">
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-gray-500">
                   Next project
                 </p>
                 <span className="mt-3 flex items-center justify-end gap-2 font-serif text-[17px] group-hover:underline">

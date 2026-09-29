@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Post } from '@/payload-types'
+import { GoArrowRight } from 'react-icons/go'
 
 export function PostCardSkeleton() {
   return (
@@ -58,9 +59,11 @@ export default function PostCard(props: { post: Post }) {
         ) : null}
         <Link
           href={`/posts/${props.post.slug}`}
-          className="mt-5 inline-block font-mono text-[9px] uppercase tracking-[0.16em] text-gray-600 hover:text-near-dark"
+          className="mt-5 font-mono text-[9px] uppercase tracking-[0.16em] text-gray-600 hover:text-near-dark
+          flex items-center gap-2"
         >
-          Read entry →
+          <span>Read entry</span>
+          <GoArrowRight className="w-3 h-3" />
         </Link>
       </div>
       {props.post.coverImage && typeof props.post.coverImage !== 'string' && (

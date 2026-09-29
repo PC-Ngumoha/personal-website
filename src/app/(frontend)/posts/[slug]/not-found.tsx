@@ -10,9 +10,15 @@ export default function PostNotFound() {
         <p className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
           Error 404
         </p>
-        <div className="relative mx-auto mb-8 select-none text-[clamp(8rem,28vw,14rem)] font-bold leading-none tracking-[-0.12em] text-foreground/10">
+        <div
+          className="relative mx-auto mb-8 select-none text-[clamp(8rem,28vw,14rem)] font-bold leading-none 
+        tracking-[-0.12em] text-foreground/10"
+        >
           404
-          <span className="absolute inset-0 bg-gradient-to-br from-primary via-foreground to-primary bg-clip-text text-transparent opacity-90">
+          <span
+            className="absolute inset-0 bg-gradient-to-br from-primary via-foreground to-primary 
+          bg-clip-text text-transparent opacity-90"
+          >
             404
           </span>
         </div>
@@ -24,7 +30,9 @@ export default function PostNotFound() {
         </p>
         <a
           href="/posts"
-          className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium 
+          text-primary-foreground transition-transform hover:-translate-y-0.5
+          focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
         >
           <span aria-hidden="true">←</span>
           Back to posts

@@ -2,6 +2,7 @@ import { fetchPosts, fetchProjects, fetchSettings } from '@/actions'
 import { Post, Project } from '@/payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
+import { GoArrowUpRight } from 'react-icons/go'
 
 export default async function HomePage() {
   const siteSettings = await fetchSettings()
@@ -124,7 +125,7 @@ export default async function HomePage() {
                     </h3>
                   </div>
                   <span className="text-sm text-near-dark/70 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
-                    ↗
+                    <GoArrowUpRight className="w-4 h-5" />
                   </span>
                 </div>
               </Link>

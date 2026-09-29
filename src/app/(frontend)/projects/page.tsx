@@ -17,7 +17,7 @@ export default async function ProjectsPage() {
           >
             <div className="mt-5 w-[calc(100%-48px)] max-w-[705px] py-[3px] pb-[7px] max-[600px]:w-[calc(100%-40px)]">
               <p
-                className="mb-[18px] font-sans text-[8px] lg:text-[10px] font-bold leading-none tracking-[.32em] text-[#59605a]
+                className="mb-[18px] font-sans text-[8px] lg:text-[10px] font-bold leading-none tracking-[.32em] text-gray-500
           uppercase"
               >
                 selected works
@@ -29,7 +29,7 @@ export default async function ProjectsPage() {
                 >
                   {siteSettings.projectPage?.title}
                 </h1>
-                <p className="mt-5 font-serif text-[15px] leading-[1.55] text-[#6d6b68] max-[600px]:text-[12px]">
+                <p className="mt-5 font-serif text-[15px] leading-[1.55] text-gray-500 max-[600px]:text-[12px]">
                   {siteSettings.projectPage?.subtitle}
                 </p>
               </div>
@@ -52,7 +52,8 @@ export default async function ProjectsPage() {
             <Link
               href="/"
               replace
-              className="mt-8 inline-block border-b border-near-dark pb-1 font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-near-dark transition-opacity hover:opacity-60"
+              className="mt-8 inline-block border-b border-near-dark pb-1 font-mono text-[10px] font-medium uppercase 
+              tracking-[0.16em] text-near-dark transition-opacity hover:opacity-60"
             >
               Return home
             </Link>
