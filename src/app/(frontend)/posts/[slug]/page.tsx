@@ -4,8 +4,21 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { RichText } from '@/components/RichText'
 import { fetchPostFromSlug, fetchRelatedPosts, fetchSettings } from '@/actions'
+import { Metadata } from 'next'
 
-export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+type SlugPageType = { params: Promise<{ slug: string }> }
+
+export async function generateMetadata({ params }: SlugPageType): Promise<Metadata> {
+  const { slug } = await params
+
+  const post = await fetchPostFromSlug({ slug })
+
+  return {
+    title: post ? post.title : 'Post',
+  }
+}
+
+export default async function PostPage({ params }: SlugPageType) {
   const { slug } = await params
 
   const siteSettings = await fetchSettings()

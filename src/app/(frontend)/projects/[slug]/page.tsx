@@ -1,5 +1,6 @@
 import { fetchProjectFromSlug, fetchRelatedProjects } from '@/actions'
 import { RichText } from '@/components/RichText'
+import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -7,7 +8,18 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6'
 import { FiGithub } from 'react-icons/fi'
 import { LuSquareArrowOutUpRight } from 'react-icons/lu'
 
-export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
+type SlugPageType = { params: Promise<{ slug: string }> }
+
+export async function generateMetadata({ params }: SlugPageType): Promise<Metadata> {
+  const { slug } = await params
+  const project = await fetchProjectFromSlug({ slug })
+
+  return {
+    title: project ? project.title : 'Project',
+  }
+}
+
+export default async function ProjectPage({ params }: SlugPageType) {
   const { slug } = await params
   const project = await fetchProjectFromSlug({ slug })
 
@@ -94,7 +106,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             {project?.techStack!.map((stack) => (
               <span
                 key={stack.id}
-                className="bg-gray-300 px-3 py-2 font-mono text-[9px] text-gray-500"
+                className="bg-gray-300 px-3 py-2 font-mono text-[10px] text-near-dark"
               >
                 {stack.technology}
               </span>
