@@ -5,10 +5,28 @@ import { getPayload } from 'payload'
 import { Navbar } from '@/components/ui/Navbar'
 import { Lora, JetBrains_Mono } from 'next/font/google'
 import { Footer } from '@/components/ui/Footer'
+import { fetchSettings } from '@/actions'
+import { Metadata } from 'next'
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+// export const metadata = {
+//   title: '',
+//   description: 'A blank template using Payload in a Next.js app.',
+// }
+
+export async function generateMetadata(): Promise<Metadata> {
+  const siteSettings = await fetchSettings()
+  const favIconPath =
+    siteSettings.image && typeof siteSettings.image !== 'string' && siteSettings.image.url
+
+  return {
+    title: {
+      default: siteSettings.siteName || 'Personal Website',
+      template: `%s ― ${siteSettings.siteName || 'Personal Website'}`,
+    },
+    icons: {
+      icon: favIconPath || '',
+    },
+  }
 }
 
 const lora = Lora({

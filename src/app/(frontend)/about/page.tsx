@@ -6,6 +6,11 @@ import { GoLink } from 'react-icons/go'
 import { LuArrowUpRight } from 'react-icons/lu'
 import { IconType } from 'react-icons/lib'
 import clsx from 'clsx'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'About me',
+}
 
 export default async function AboutPage() {
   const siteSettings = await fetchSettings()

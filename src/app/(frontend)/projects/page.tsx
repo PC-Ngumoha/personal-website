@@ -1,6 +1,11 @@
 import { fetchProjects, fetchSettings } from '@/actions'
 import ProjectGroup from '@/components/projects/ProjectGroup'
+import { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Projects',
+}
 
 export default async function ProjectsPage() {
   const projects = await fetchProjects({ page: 1 })

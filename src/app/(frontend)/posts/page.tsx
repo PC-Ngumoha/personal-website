@@ -1,6 +1,11 @@
 import { fetchCategories, fetchPosts, fetchSettings } from '@/actions'
 import PostGroup from '@/components/posts/PostGroup'
+import { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Posts',
+}
 
 export default async function PostsPage() {
   const siteSettings = await fetchSettings()
